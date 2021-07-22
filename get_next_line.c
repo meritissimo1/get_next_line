@@ -6,47 +6,19 @@
 /*   By: marcrodr <marcrodr@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 17:09:01 by marcrodr          #+#    #+#             */
-/*   Updated: 2021/07/22 16:07:14 by marcrodr         ###   ########.fr       */
+/*   Updated: 2021/07/22 17:36:27 by marcrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static char	*cut_line(char **buf, size_t *scissor)
-{
-	int		i;
-	char	*tmp;
-	char	*line;
-
-	i = 0;
-	line = NULL;
-	if(!*buf)
-		return (NULL);
-	tmp = ft_strdup(*buf);
-	if (search_line_break(&*buf, &*scissor))
-	{
-		line = ft_substr(*buf, 0, *scissor + 1);
-		free(*buf);
-		*buf = ft_substr(tmp, *scissor + 1, ft_strlen(tmp));
-	}
-	else
-	{
-		while (tmp[i] != '\0')
-			i++;
-		if (i > 0)
-			line = ft_substr(tmp, 0, i);
-                free(*buf);
-	        *buf = NULL;
-	}
-	free(tmp);
-	return (line);
-}
+#include "get_next_line.h"
 
 static int	search_line_break(char **buf, size_t *scissor)
 {
 	int	i;
 
+	i = 0;
 	if (!*buf)
 		return (0);
-	i = 0;
 	while ((*buf)[i] != '\0')
 	{
 		if ((*buf)[i] == '\n')
@@ -57,6 +29,35 @@ static int	search_line_break(char **buf, size_t *scissor)
 		i++;
 	}
 	return (0);
+}
+
+static char	*cut_line(char **buf, size_t *scissor)
+{
+	int		i;
+	char	*tmp;
+	char	*line;
+
+	i = 0;
+	line = NULL;
+	if (!*buf)
+		return (NULL);
+	tmp = ft_strdup(*buf);
+	if (search_line_break(&*buf, &*scissor))
+	{
+		line = ft_substr(*buf, 0, *scissor + 1);
+		free(*buf);
+		*buf = ft_substr(tmp, *scissor + 1, ft_strlen(tmp));
+	}
+	else
+	{
+		i = ft_strlen(tmp);
+		if (i > 0)
+			line = ft_substr(tmp, 0, i);
+		free(*buf);
+		*buf = NULL;
+	}
+	free(tmp);
+	return (line);
 }
 
 static void	set_buf(char **buf, char **tmp, char **readed)
