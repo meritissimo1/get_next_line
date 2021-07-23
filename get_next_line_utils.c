@@ -6,30 +6,11 @@
 /*   By: marcrodr <marcrodr@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 17:10:11 by marcrodr          #+#    #+#             */
-/*   Updated: 2021/07/23 18:06:40 by marcrodr         ###   ########.fr       */
+/*   Updated: 2021/07/23 18:15:50 by marcrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*str;
-	size_t	s_len;
-
-	if (!s)
-		return (0);
-	if (ft_strlen(s) < start)
-		return (ft_calloc(1, sizeof(char)));
-	s_len = ft_strlen(s + start);
-	if ((s_len) < len)
-		len = s_len;
-	str = (char *)malloc((len + 1) * sizeof(char));
-	if (!str)
-		return (0);
-	ft_strlcpy(str, (s + start), len + 1);
-	return (str);
-}
 
 size_t	ft_strlen(const char *str)
 {
@@ -101,4 +82,23 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		dst[i] = '\0';
 	}
 	return (ft_strlen(src));
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*str;
+	size_t	s_len;
+
+	if (!s)
+		return (0);
+	if (ft_strlen(s) < start)
+		return (malloc(1, sizeof(char)));
+	s_len = ft_strlen(s + start);
+	if ((s_len) < len)
+		len = s_len;
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (0);
+	ft_strlcpy(str, (s + start), len + 1);
+	return (str);
 }
