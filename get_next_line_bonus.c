@@ -73,27 +73,27 @@ static void	set_buf(char **buf, char **tmp, char **readed)
 	}
 }
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    size_t        scissor;
-    size_t        qtd_read;
-    static char    *buf[256];
-    char        *readed;
-    char        *tmp;
+	size_t        scissor;
+	size_t        qtd_read;
+	static char    *buf[256];
+	char        *readed;
+	char        *tmp;
 
-    if (fd < 0 || read(fd, NULL, 0) != 0 || BUFFER_SIZE < 0)
-        return (NULL);
-    readed = malloc(BUFFER_SIZE + 1);
-    qtd_read = read(fd, readed, BUFFER_SIZE);
-    scissor = 0;
-    while (qtd_read > 0)
-    {
-        (readed)[qtd_read] = '\0';
-        set_buf(&buf[fd], &tmp, &readed);
-        if (search_line_break(&buf[fd], &scissor))
-            break ;
-        qtd_read = read(fd, readed, BUFFER_SIZE);
-    }
-    free(readed);
-    return (cut_line(&buf[fd], &scissor));
+	if (fd < 0 || read(fd, NULL, 0) != 0 || BUFFER_SIZE < 0)
+		return (NULL);
+	readed = malloc(BUFFER_SIZE + 1);
+	qtd_read = read(fd, readed, BUFFER_SIZE);
+	scissor = 0;
+	while (qtd_read > 0)
+	{
+		(readed)[qtd_read] = '\0';
+		set_buf(&buf[fd], &tmp, &readed);
+		if (search_line_break(&buf[fd], &scissor))
+			break ;
+		qtd_read = read(fd, readed, BUFFER_SIZE);
+	}
+	free(readed);
+	return (cut_line(&buf[fd], &scissor));
 }
