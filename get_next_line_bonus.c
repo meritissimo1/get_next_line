@@ -75,11 +75,11 @@ static void	set_buf(char **buf, char **tmp, char **readed)
 
 char	*get_next_line(int fd)
 {
-	size_t        scissor;
-	size_t        qtd_read;
-	static char    *buf[256];
-	char        *readed;
-	char        *tmp;
+	size_t		scissor;
+	size_t		qtd_read;
+	static char	*buf[256];
+	char		*readed;
+	char		*tmp;
 
 	if (fd < 0 || read(fd, NULL, 0) != 0 || BUFFER_SIZE < 0)
 		return (NULL);
